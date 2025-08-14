@@ -1,10 +1,10 @@
 import { test, expect } from '@playwright/test';
-import { execArgv, execPath, hasUncaughtExceptionCaptureCallback } from 'process';
 
 test.describe.serial('Auth flow', () => {
 
   test.beforeEach(async ({ page }) =>  {
     await page.goto('https://automationexercise.com/');
+
     await expect(page).toHaveTitle('Automation Exercise');
     const responsePage = await page.request.get('https://automationexercise.com/');
     await expect(responsePage.status()).toBe(200);
@@ -16,7 +16,13 @@ test.describe.serial('Auth flow', () => {
     await expect(consentButton).toBeVisible();
     await consentButton.click();
     const logIn = page.getByRole('listitem').filter({ hasText: 'Signup / Login' });
+    const textSign_Login = await logIn.textContent();
+    expect(textSign_Login).toEqual(' Signup / Login');
     await logIn.click();
+
+    const h2newUserSignUp = page.locator('.signup-form', ({hasText: 'New User Signup!'}));
+    expect (h2newUserSignUp).toBeVisible();
+
 
     //Input field Name
     const nameField = page.locator('input[placeholder="Name"]');
@@ -46,7 +52,16 @@ test.describe.serial('Auth flow', () => {
     await signupButton.click();
 
     //Account Inforamtion
+    const radioButton = page.locator('#id_gender1');
+    await radioButton.click();
+
+    const titleText = page.locator('.title.text-center', ({hasText: 'Enter Account Information'}));
+    await expect(titleText).toBeVisible();
+
+    //Fill details: Title, Name, Email, Password, Date of birth
+   
+    await page.getByLabel('password').fill('Europe2025$', {delay: 50000});
   });
-
-
 });
+
+
