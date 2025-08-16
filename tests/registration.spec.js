@@ -61,7 +61,32 @@ test.describe.serial('Auth flow', () => {
     //Fill details: Title, Name, Email, Password, Date of birth
    
     await page.getByLabel('password').fill('Europe2025$', {delay: 50000});
+
+    // Date of birth 
+    const dateBirgt = page.locator('.form-group .row .selector #days');
+    await dateBirgt.selectOption('31');
+
+
+//     for(let day = 1; day <= 31; day++) {
+//         await page.selectOption('#days', String(day));
+
+//         const selected = await page.$eval('#days', el => el.value);
+//         expect (selected).toBe(String(day));
+//     }
+//   });
+
+// month of birth 
+   const monthBIrth = page.locator('.form-group .row #months');
+   await monthBIrth.selectOption('March');
+   expect(monthBIrth).toContainText('March');
+ 
+   //yaer of birth
+
+   const yearOfbirth = page.locator('.form-group .row #years');
+   await yearOfbirth.selectOption('1994');
+
+   await page.getByRole('checkbox', {name: 'Sign up for our newsletter!'}).check();
+   await page.getByRole('checkbox', {name: 'Receive special offers from our partners!'}).check();
   });
+
 });
-
-
