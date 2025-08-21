@@ -87,6 +87,69 @@ test.describe.serial('Auth flow', () => {
 
    await page.getByRole('checkbox', {name: 'Sign up for our newsletter!'}).check();
    await page.getByRole('checkbox', {name: 'Receive special offers from our partners!'}).check();
-  });
 
+// fill input filed name
+   const inputName = page.getByLabel('First name ');
+     await inputName.click();
+     await inputName.pressSequentially('Oleh', {deley: 5000});
+     await expect(inputName).toHaveValue('Oleh');
+
+    //fill  Lst name
+    const lastNameInput = await page.getByLabel('Last name ');
+    await lastNameInput.click();
+    await lastNameInput.fill('Mykhayliv');
+    expect(lastNameInput).toHaveValue('Mykhayliv');
+
+    // fill input field company
+    const companyIputField = await page.getByLabel('Company').first();
+     await companyIputField.click();
+     await companyIputField.fill('Automation tests');
+     await expect(companyIputField).toBeVisible();
+     expect(companyIputField).toHaveValue('Automation tests');
+
+     // fill in inputfield address
+     const addressInputField = await page.getByLabel('Address ').first();
+     await addressInputField.click();
+     expect(addressInputField).toBeVisible();
+     await addressInputField.fill('Prague');
+
+     // fill in input field address2
+     const address2InputField = await page.getByLabel('Address 2')
+     await address2InputField.click();
+     await address2InputField.fill('Lviv');
+
+     //slect option
+     const countryOption = await page.getByLabel('Country ');
+     await countryOption.selectOption('United States');
+
+     
+     const stateInputFied = page.locator('#state');
+     await stateInputFied.click
+     await stateInputFied.fill('Frankivski');
+     await expect(stateInputFied).toHaveValue('Frankivski');
+
+     //input city
+     const inputCity = page.locator('#city');
+     await inputCity.click();
+     await inputCity.fill('Lviv');
+     await expect(inputCity).toHaveValue('Lviv');
+
+    //zipcode 
+    const zipCode = await page.locator('#zipcode');
+     await zipCode.click();
+     await zipCode.fill('79000');
+     await expect(zipCode).toHaveValue('79000');
+
+     //mobile number
+     const phoneNumber = await page.locator('#mobile_number');
+     await phoneNumber.click();
+     await phoneNumber.fill('380961570878');
+     expect(phoneNumber).toHaveValue('380961570878');
+
+     // creata account 
+     const buttonCreaAccount = await page.getByRole('button', {name: 'Create Account'});
+     await expect(buttonCreaAccount).toBeVisible();
+     await expect(buttonCreaAccount).toHaveText('Create Account');
+     await buttonCreaAccount.click();
+  });
 });
