@@ -1,24 +1,14 @@
 import { test, expect } from '@playwright/test';
+import { AuthPage } from './page-objects/authFlow';
 
 test.describe('Auth flow', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto('https://automationexercise.com/');
-    await expect(page).toHaveTitle('Automation Exercise');
 
-    const consentButton = page.getByRole('button', { name: 'Consent' });
-    if (await consentButton.isVisible()) {
-      await consentButton.click();
-    }
-
-    const responsePage = await page.request.get('https://automationexercise.com/');
-    expect(responsePage.status()).toBe(200);
-
-    const loginLink = page.locator('a[href="/login"]');
-    await expect(loginLink).toBeVisible();
-    await loginLink.click();
-
-    const h2newUserSignUp = page.getByRole('heading', { name: 'New User Signup!' });
-    await expect(h2newUserSignUp).toBeVisible();
+  let auutPage: AuthPage;
+  
+    test.beforeEach(async ({ page }) => {
+    
+      auutPage = new AuthPage(page);
+      await auutPage.goto();
   });
 
   test('Registration flow', async ({ page }) => {
@@ -59,7 +49,7 @@ test.describe('Auth flow', () => {
 
     // radio buttons
     const radioButton = page.locator('#id_gender1');
-    expect(radioButton).toBeVisible();
+    await expect(radioButton).toBeVisible();
 
     await radioButton.check();
     await expect(radioButton).toBeChecked();
@@ -68,7 +58,7 @@ test.describe('Auth flow', () => {
     const titleText = page.locator('.title.text-center', { hasText: 'Enter Account Information' });
     await expect(titleText).toBeVisible();
 
-    await page.getByLabel('password').fill('Europe2025$', { delay: 5000 });
+    await page.getByLabel('password').type('Europe2025$');
 
     // Date of birth
     const dateBirgt = page.locator('.form-group .row .selector #days');
@@ -89,24 +79,24 @@ test.describe('Auth flow', () => {
     // fill input field name
     const inputName = page.getByLabel('First name ');
     await inputName.click();
-    await inputName.pressSequentially('Oleh', { delay: 5000 });
+    await inputName.fill('Oleh');
     await expect(inputName).toHaveValue('Oleh');
 
     // fill last name
-    const lastNameInput = await page.getByLabel('Last name ');
+    const lastNameInput = page.getByLabel('Last name ');
     await lastNameInput.click();
     await lastNameInput.fill('Mykhayliv');
     expect(lastNameInput).toHaveValue('Mykhayliv');
 
     // fill input field company
-    const companyIputField = await page.getByLabel('Company').first();
+    const companyIputField = page.getByLabel('Company').first();
     await companyIputField.click();
     await companyIputField.fill('Automation tests');
     await expect(companyIputField).toBeVisible();
     expect(companyIputField).toHaveValue('Automation tests');
 
     // fill in input field address
-    const addressInputField = await page.getByLabel('Address ').first();
+    const addressInputField = page.getByLabel('Address ').first();
     await addressInputField.click();
     expect(addressInputField).toBeVisible();
     await addressInputField.fill('Prague');
@@ -117,7 +107,7 @@ test.describe('Auth flow', () => {
     await address2InputField.fill('Lviv');
 
     // select option
-    const countryOption = await page.getByLabel('Country ');
+    const countryOption = page.getByLabel('Country ');
     await countryOption.selectOption('United States');
 
     const stateInputFied = page.locator('#state');
@@ -132,24 +122,32 @@ test.describe('Auth flow', () => {
     await expect(inputCity).toHaveValue('Lviv');
 
     // zipcode
-    const zipCode = await page.locator('#zipcode');
+    const zipCode = page.locator('#zipcode');
     await zipCode.click();
     await zipCode.fill('79000');
     await expect(zipCode).toHaveValue('79000');
 
     // mobile number
-    const phoneNumber = await page.locator('#mobile_number');
+    const phoneNumber = page.locator('#mobile_number');
     await phoneNumber.click();
     await phoneNumber.fill('380961570878');
     expect(phoneNumber).toHaveValue('380961570878');
 
     // create account
-    const buttonCreaAccount = await page.getByRole('button', { name: 'Create Account' });
+    const buttonCreaAccount = page.getByRole('button', { name: 'Create Account' });
     await expect(buttonCreaAccount).toBeVisible();
     await expect(buttonCreaAccount).toHaveText('Create Account');
     await buttonCreaAccount.click();
 
     const accountCreatedText = page.locator('[data-qa="account-created"]');
     await expect(accountCreatedText).toContainText('Account Created!');
+
+    //delete account
+    const linkButtonContinue = page.getByRole('link', {name: 'Continue'});
+    await expect(linkButtonContinue).toBeVisible();
+    await linkButtonContinue.click();
+
+    const deleteAccount = page.locator('a[href="/delete_account"]:has-text("Delete Account")');
+    await deleteAccount.click();
   });
 });
