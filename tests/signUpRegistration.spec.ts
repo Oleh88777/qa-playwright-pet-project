@@ -1,14 +1,14 @@
 import { test, expect } from '@playwright/test';
-import { AuthPage } from './page-objects/authFlow';
+import { singupAcceptConsent } from './page-objects/acceptConsent';
 
-test.describe('Auth flow', () => {
+test.describe('Sign Up, Registration', () => {
 
-  let auutPage: AuthPage;
+  let auutPage: singupAcceptConsent;
   
     test.beforeEach(async ({ page }) => {
     
-      auutPage = new AuthPage(page);
-      await auutPage.goto();
+      auutPage = new singupAcceptConsent(page);
+      await auutPage.acceptConsent();
   });
 
   test('Registration flow', async ({ page }) => {
