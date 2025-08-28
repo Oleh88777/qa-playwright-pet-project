@@ -1,9 +1,9 @@
 import { Page, expect } from '@playwright/test';
 
-export class AuthPage {
+export class singupAcceptConsent {
   constructor(private page: Page) {}
 
-  async goto() {
+  async acceptConsent() {
     await this.page.goto('https://automationexercise.com/');
     await expect(this.page).toHaveTitle('Automation Exercise');
 
