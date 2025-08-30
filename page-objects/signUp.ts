@@ -1,4 +1,5 @@
 import { Page, expect } from '@playwright/test';
+import { cpSync } from 'fs';
 
 export class signUpRegistration {
   constructor(private page: Page) {}
@@ -37,7 +38,18 @@ export class signUpRegistration {
     await signupButton.click();
 
     await expect(this.page).toHaveURL('https://automationexercise.com/signup');
-    
 }
+
+  async deleteAccount() {
+    const signUpDeleteAccount = this.page.locator('a[href="/delete_account"]:has-text("Delete Account")');
+    await expect(signUpDeleteAccount).toBeVisible();
+    
+    await signUpDeleteAccount.click();
+
+    await expect(this.page).toHaveURL('https://automationexercise.com/delete_account');
+
+    const confirmationDeleteMessage = this.page.locator('h2:has-text("Account Deleted!")');
+    await expect(confirmationDeleteMessage).toBeVisible();
+  }
 
 }
