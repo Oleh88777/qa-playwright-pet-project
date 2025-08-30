@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { singupAcceptConsent } from '../../page-objects/acceptConsent';
-import { signUpRegistration } from '../../page-objects/signUp';
+import { singupAcceptConsent } from '../page-objects/acceptConsent';
+import { signUpRegistration } from '../page-objects/signUp';
 
 test.describe('Log in', () => {
 
