@@ -23,3 +23,4 @@ export class singupAcceptConsent {
       await expect(h2newUserSignUp).toBeVisible();
   }
 }
+ 

@@ -111,12 +111,12 @@ test.describe('Accept Consent', () => {
     const accountCreatedText = page.locator('[data-qa="account-created"]');
     await expect(accountCreatedText).toContainText('Account Created!');
 
-    //delete account
-    const linkButtonContinue = page.getByRole('link', {name: 'Continue'});
-    await expect(linkButtonContinue).toBeVisible();
-    await linkButtonContinue.click();
+    // continue
+    const continueButton = page.locator('[data-qa="continue-button"]');
+    continueButton.click();
 
-    const deleteAccount = page.locator('a[href="/delete_account"]:has-text("Delete Account")');
-    await deleteAccount.click();
+    //delete account
+    const signUpDeleteAccount = new signUpRegistration(page);
+    await signUpDeleteAccount.deleteAccount();
   });
 });
