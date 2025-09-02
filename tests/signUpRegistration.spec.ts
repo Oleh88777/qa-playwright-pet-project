@@ -1,21 +1,21 @@
 import { test, expect } from '@playwright/test';
-import { singupAcceptConsent } from '../page-objects/acceptConsent';
-import { signUpRegistration } from '../page-objects/signUp';
+import { PageManager } from '../page-objects/pageManager';
 
 test.describe('Accept Consent', () => {
 
-  let auutPage: singupAcceptConsent;
+  let pages: PageManager;
   
     test.beforeEach(async ({ page }) => {
     
-      auutPage = new singupAcceptConsent(page);
-      await auutPage.acceptConsent();
+      pages = new PageManager(page);
+      await pages.acceptConsent().acceptConsent();
   });
 
-  test('signUp', async ({ page }) => {
-    const signUpfill = new signUpRegistration(page);
-    await signUpfill.signUpRegistration();
-   
+  test('signUpRegistrationFLow', async ({ page }) => {
+    const signUp = pages.signUpRegister();
+    
+    await signUp.signUpRegistration();
+    
     // radio buttons
     const radioButton = page.locator('#id_gender1');
     await expect(radioButton).toBeVisible();
@@ -46,10 +46,8 @@ test.describe('Accept Consent', () => {
     await page.getByRole('checkbox', { name: 'Receive special offers from our partners!' }).check();
 
     // fill input field name
-    const inputName = page.getByLabel('First name ');
-    await inputName.click();
-    await inputName.fill('Oleh');
-    await expect(inputName).toHaveValue('Oleh');
+     await signUp.inputNameSignUp();
+
 
     // fill last name
     const lastNameInput = page.getByLabel('Last name ');
@@ -113,10 +111,9 @@ test.describe('Accept Consent', () => {
 
     // continue
     const continueButton = page.locator('[data-qa="continue-button"]');
-    continueButton.click();
+    await continueButton.click();
 
-    //delete account
-    const signUpDeleteAccount = new signUpRegistration(page);
-    await signUpDeleteAccount.deleteAccount();
+    // delete account
+    // await signUp.deleteAccount();
   });
 });

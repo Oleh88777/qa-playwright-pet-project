@@ -1,18 +1,20 @@
 import { test, expect } from '@playwright/test';
-import { singupAcceptConsent } from '../page-objects/acceptConsent';
-import { signUpRegistration } from '../page-objects/signUp';
+import { PageManager } from '../page-objects/pageManager'
 
 test.describe('Log in', () => {
 
-    let signInpage: singupAcceptConsent;
+    let pages: PageManager;
 
   test.beforeEach(async ({ page }) => {
-    signInpage = new singupAcceptConsent(page);
-    await signInpage.acceptConsent();
+    pages = new PageManager(page);
+
+    await pages.acceptConsent().acceptConsent();
 
   });
 
   test('Log in', async ({ page }) => {
+    const signUp = pages.signUpRegister();
+    
     const loginLink = page.locator('a[href="/login"]');
     await expect(loginLink).toBeVisible();
     await loginLink.click();
@@ -20,24 +22,13 @@ test.describe('Log in', () => {
     
     await expect(page).toHaveURL(/.*\/login/);
 
-   // input email
-   const loginEmail = page.locator('input[data-qa="login-email"]');
-   await loginEmail.click();
-   
-   expect(loginEmail).toBeVisible();
-
-   await loginEmail.fill('mykhayliv88777@gmail.com');
-   expect(loginEmail).toHaveValue('mykhayliv88777@gmail.com');
+   // input email & password
+    await signUp.inputLoginEmail();
+    await signUp.logininpuEnterPassowrd();
 
    // input password
-   const logInPassowrd = page.getByRole('textbox', ({name: 'password'}));
-   await logInPassowrd.click();
-
-   expect(logInPassowrd).toBeVisible();
-   const loignPlaceholder = await logInPassowrd.getAttribute('placeholder');
-   expect(loignPlaceholder).toBe('Password');
-
-   await logInPassowrd.fill('Europe2025$');
+    // const loginInputPassword = new signUpRegistration(page);
+    // await loginInputPassword.logininpuEnterPassowrd();
 
    //login button
    const logInbutton = page.locator('[data-qa="login-button"]');
@@ -48,11 +39,10 @@ test.describe('Log in', () => {
    await logInbutton.click();
 
    //user name
-   const navLoggedInUserName = page.locator('b', { hasText: 'Oleh'});
-   await expect(navLoggedInUserName).toBeVisible();
+   const navLoggedInUserName = page.locator('b').filter({ hasText: 'Oleh' });
+   await expect(navLoggedInUserName).toBeVisible({ timeout: 10000 });
 
    //delte account
-   const signUpDeleteAccount = new signUpRegistration(page);
-   await signUpDeleteAccount.deleteAccount();
+   await signUp.deleteAccount();
   });
 });
