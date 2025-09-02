@@ -52,4 +52,29 @@ export class signUpRegistration {
     await expect(confirmationDeleteMessage).toBeVisible();
   }
 
+  async inputNameSignUp()  {
+    const inputName = this.page.getByLabel('First name ');
+    await inputName.click();
+    
+    await inputName.fill('Oleh');
+    await expect(inputName).toHaveValue('Oleh');
+  }
+
+  async inputLoginEmail() {
+   const loginEmail = this.page.locator('input[data-qa="login-email"]');
+   await expect(loginEmail).toBeVisible({ timeout: 10000 });
+   await loginEmail.fill('mykhayliv88777@gmail.com');
+   await expect(loginEmail).toHaveValue('mykhayliv88777@gmail.com');
+  }
+
+  async logininpuEnterPassowrd() {
+   const logInPassowrd = this.page.getByRole('textbox', ({name: 'password'}));
+   await logInPassowrd.click();
+
+   await expect(logInPassowrd).toBeVisible();
+   const loignPlaceholder = await logInPassowrd.getAttribute('placeholder');
+   await expect(loignPlaceholder).toBe('Password');
+
+   await logInPassowrd.fill('Europe2025$');
+  }
 }

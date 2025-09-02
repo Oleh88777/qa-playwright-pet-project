@@ -22,5 +22,6 @@ export class singupAcceptConsent {
       const h2newUserSignUp = this.page.getByRole('heading', { name: 'New User Signup!' });
       await expect(h2newUserSignUp).toBeVisible();
   }
+
 }
  
