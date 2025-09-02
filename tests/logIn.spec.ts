@@ -26,10 +26,6 @@ test.describe('Log in', () => {
     await signUp.inputLoginEmail();
     await signUp.logininpuEnterPassowrd();
 
-   // input password
-    // const loginInputPassword = new signUpRegistration(page);
-    // await loginInputPassword.logininpuEnterPassowrd();
-
    //login button
    const logInbutton = page.locator('[data-qa="login-button"]');
    await expect(logInbutton).toHaveText('Login')
