@@ -1,8 +1,11 @@
 import { Page, expect } from '@playwright/test';
 import { cpSync } from 'fs';
+import { HelperBase } from './helperBase';
 
-export class signUpRegistration {
-  constructor(private page: Page) {}
+export class signUpRegistration extends HelperBase{
+  constructor( page: Page) {
+    super(page);
+  }
 
   async signUpRegistration() {
      const nameInput = this.page.locator('input[placeholder="Name"]');
@@ -38,7 +41,73 @@ export class signUpRegistration {
     await signupButton.click();
 
     await expect(this.page).toHaveURL('https://automationexercise.com/signup');
+} 
+
+async enterPhoneNumber () {
+    const phoneNumber = this.page.locator('#mobile_number');
+    await phoneNumber.click();
+    await phoneNumber.fill('380961570878');
+    expect(phoneNumber).toHaveValue('380961570878');
 }
+
+async inputCity () {
+    const inputCity = this.page.locator('#city');
+    await inputCity.click();
+    await inputCity.fill('Lviv');
+    await expect(inputCity).toHaveValue('Lviv');
+}
+
+ async zipCOde (){
+    const zipCode = this.page.locator('#zipcode');
+    await zipCode.click();
+    await zipCode.fill('79000');
+    await expect(zipCode).toHaveValue('79000');
+ }
+
+async inpuAddress () {
+    const addressInputField = this.page.getByLabel('Address ').first();
+    await addressInputField.click();
+    expect(addressInputField).toBeVisible();
+    await addressInputField.fill('Prague');
+
+}
+
+async inputAdress2 () {
+    const address2InputField = this.page.getByLabel('Address 2');
+    await address2InputField.click();
+    await address2InputField.fill('Lviv');
+}
+
+async inputLastname() {
+    const lastNameInput = this.page.getByLabel('Last name ');
+    await lastNameInput.click();
+    await lastNameInput.fill('Mykhayliv');
+    expect(lastNameInput).toHaveValue('Mykhayliv');
+}
+
+async fillCompanyName() {
+    const companyIputField = this.page.getByLabel('Company').first();
+    await companyIputField.click();
+    await companyIputField.fill('Automation tests');
+    await expect(companyIputField).toBeVisible();
+    expect(companyIputField).toHaveValue('Automation tests');
+}
+
+//   async fillLastName () {
+//     const lastNameInput = this.page.getByLabel('Last name ');
+//     await lastNameInput.click();
+//     await lastNameInput.fill('Mykhayliv');
+//     expect(lastNameInput).toHaveValue('Mykhayliv');
+//   }
+
+  async radioButons() {
+    const radioButton = this.page.locator('#id_gender1');
+    await expect(radioButton).toBeVisible();
+
+    await radioButton.check();
+    await expect(radioButton).toBeChecked();
+
+  }
 
   async deleteAccount() {
     const signUpDeleteAccount = this.page.locator('a[href="/delete_account"]:has-text("Delete Account")');
@@ -77,4 +146,13 @@ export class signUpRegistration {
 
    await logInPassowrd.fill('Europe2025$');
   }
+
+  async logOut () {
+   const logOutBtn = this.page.locator('[href="/logout"]');
+    await expect(logOutBtn).toBeVisible();
+
+    await logOutBtn.click();
+  }
+
+
 }

@@ -1,11 +1,15 @@
 import { Page, expect } from '@playwright/test';
+import { HelperBase } from './helperBase';
 
-export class singupAcceptConsent {
-  constructor(private page: Page) {}
+export class singupAcceptConsent extends HelperBase{
+  constructor(page: Page) {
+    super(page)
+  }
 
   async acceptConsent() {
     await this.page.goto('https://automationexercise.com/');
     await expect(this.page).toHaveTitle('Automation Exercise');
+    await this.waitForNumberOfSeconds(2);
 
     const consentButton = this.page.getByRole('button', { name: 'Consent' });
     if (await consentButton.isVisible()) {

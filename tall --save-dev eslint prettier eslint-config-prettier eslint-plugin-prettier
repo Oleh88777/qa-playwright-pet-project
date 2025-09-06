@@ -1,0 +1,119 @@
+[33mcommit fcf7ddce14e45c872835f3db0eb9e27a27cb2662[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdevelop[m[33m, [m[1;31morigin/develop[m[33m)[m
+Author: Oleh <56585458+Oleh88777@users.noreply.github.com>
+Date:   Tue Sep 2 22:45:16 2025 +0200
+
+    deleted commnets
+
+[33mcommit b6e7aa6f7d4d387a7e6c0b25bf0f0836d1918000[m
+Author: Oleh <56585458+Oleh88777@users.noreply.github.com>
+Date:   Tue Sep 2 22:34:19 2025 +0200
+
+    adde a pageManager
+
+[33mcommit 79899ffcc432266c12ca21a4d805c1d48b49fd83[m
+Author: Oleh <56585458+Oleh88777@users.noreply.github.com>
+Date:   Sat Aug 30 15:41:24 2025 +0200
+
+    changed test folder structure
+
+[33mcommit 7345e62db2aa33d51d0635426814ba4dbeb28529[m
+Author: Oleh <56585458+Oleh88777@users.noreply.github.com>
+Date:   Sat Aug 30 15:25:25 2025 +0200
+
+    log in test added method deleteAccount
+
+[33mcommit 943ceb5177e67b69b4601d8544fd51f3c9e11586[m
+Author: Oleh <56585458+Oleh88777@users.noreply.github.com>
+Date:   Thu Aug 28 22:12:29 2025 +0200
+
+    added class signUp
+
+[33mcommit b848369c65e099dd8f5b0e276bf0aa8724d910d2[m[33m ([m[1;32mmain[m[33m)[m
+Merge: 4ba8d51 0f29fcc
+Author: Oleh <56585458+Oleh88777@users.noreply.github.com>
+Date:   Thu Aug 28 14:11:15 2025 +0200
+
+    Merge pull request #4 from Oleh88777/develop
+    
+    changed naming
+
+[33mcommit 0f29fcc7be824de3e026725bd8eb588e1f67e3a1[m
+Author: Oleh <56585458+Oleh88777@users.noreply.github.com>
+Date:   Thu Aug 28 14:07:02 2025 +0200
+
+    changed naming
+
+[33mcommit 4ba8d513a20296a0a1d99d6803477703f0f69b7e[m
+Merge: 32fd68a 42887e9
+Author: Oleh <56585458+Oleh88777@users.noreply.github.com>
+Date:   Wed Aug 27 12:13:30 2025 +0200
+
+    Merge pull request #3 from Oleh88777/develop
+    
+    Added class and delete account
+
+[33mcommit 42887e9c32e3d15b14c5fc904f82a3ac76b0cd91[m
+Author: Oleh <56585458+Oleh88777@users.noreply.github.com>
+Date:   Wed Aug 27 12:10:12 2025 +0200
+
+    added class and delete account
+
+[33mcommit 6a89bcea45d4440be055e7586f6f67198f880e23[m
+Author: Oleh <56585458+Oleh88777@users.noreply.github.com>
+Date:   Sat Aug 23 21:11:36 2025 +0200
+
+    Add node_modules, test-results, and playwright-report to .gitignore
+
+[33mcommit 32fd68a0d18eba3a7cdd12181ce45c159bdee02b[m
+Merge: d40ab78 908ceea
+Author: Oleh <56585458+Oleh88777@users.noreply.github.com>
+Date:   Sat Aug 23 20:51:48 2025 +0200
+
+    Merge pull request #2 from Oleh88777/develop
+    
+    refactor of registration flow test
+
+[33mcommit 908ceea4999cfa7026c2287d630365a489aec76c[m
+Author: Oleh <56585458+Oleh88777@users.noreply.github.com>
+Date:   Sat Aug 23 20:46:52 2025 +0200
+
+    refactor of registration flow test
+
+[33mcommit d40ab78c5834ebafda770d1d5eb298fa7a9c100b[m
+Author: Oleh <56585458+Oleh88777@users.noreply.github.com>
+Date:   Thu Aug 21 19:17:07 2025 +0200
+
+    fihished registartion
+
+[33mcommit 53cc89113b2d41f78fec0c130e86bd3ecce38e64[m[33m ([m[1;31morigin/registartion_phase_2_date_of_birth_check_boxes[m[33m, [m[1;32mall[m[33m)[m
+Author: Oleh Mykhayliv <mykhayliv88777@gmail.com>
+Date:   Sat Aug 16 16:03:30 2025 +0200
+
+    date of birth and checboxes
+
+[33mcommit 73e222bc68ed89a469410dcd41a67dcc10989750[m
+Author: Oleh Mykhayliv <mykhayliv88777@gmail.com>
+Date:   Thu Aug 14 19:56:24 2025 +0200
+
+    phase_2_radio_button & password
+
+[33mcommit ed8c86d2d7ee68923bf61fdf780cb2e57eb5ddd3[m
+Merge: 5f366ff 196abfb
+Author: Oleh <56585458+Oleh88777@users.noreply.github.com>
+Date:   Wed Aug 13 17:09:12 2025 +0200
+
+    Merge pull request #1 from Oleh88777/registration-test
+    
+    updated registartion flow tests
+
+[33mcommit 196abfbc0b0c4fd2f5150efd047a6b88610ac392[m[33m ([m[1;31morigin/registration-test[m[33m)[m
+Author: Oleh Mykhayliv <mykhayliv88777@gmail.com>
+Date:   Wed Aug 13 17:04:47 2025 +0200
+
+    updated registartion flow tests
+
+[33mcommit 5f366ffb4b1af3fb47923512d65411d5ba84f45d[m
+Author: Oleh Mykhayliv <mykhayliv88777@gmail.com>
+Date:   Wed Aug 13 13:31:27 2025 +0200
+
+    login test
