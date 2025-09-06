@@ -3,14 +3,14 @@ import { PageManager } from '../page-objects/pageManager'
 
 test.describe('Log in', () => {
 
-    let pages: PageManager;
+    let pages: PageManager
 
   test.beforeEach(async ({ page }) => {
-    pages = new PageManager(page);
+    pages = new PageManager(page)
 
     await pages.acceptConsent().acceptConsent();
 
-  });
+  })
 
   test('Log in', async ({ page }) => {
     const signUp = pages.signUpRegister();
@@ -38,7 +38,9 @@ test.describe('Log in', () => {
    const navLoggedInUserName = page.locator('b').filter({ hasText: 'Oleh' });
    await expect(navLoggedInUserName).toBeVisible({ timeout: 10000 });
 
+   await signUp.logOut();
+
    //delte account
-   await signUp.deleteAccount();
+   //await signUp.deleteAccount();
   });
 });

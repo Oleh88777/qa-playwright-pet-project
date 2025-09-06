@@ -1,119 +1,83 @@
 import { test, expect } from '@playwright/test';
 import { PageManager } from '../page-objects/pageManager';
+import { log } from 'console';
+import { AsyncLocalStorage } from 'async_hooks';
 
 test.describe('Accept Consent', () => {
-
   let pages: PageManager;
-  
-    test.beforeEach(async ({ page }) => {
-    
-      pages = new PageManager(page);
-      await pages.acceptConsent().acceptConsent();
+
+  test.beforeEach(async ({ page }) => {
+    pages = new PageManager(page);
+    await pages.acceptConsent().acceptConsent();
   });
 
-  test('signUpRegistrationFLow', async ({ page }) => {
+  test('Sign Up Registration Flow', async ({ page }) => {
     const signUp = pages.signUpRegister();
-    
+
+    // Registration flow
     await signUp.signUpRegistration();
-    
-    // radio buttons
-    const radioButton = page.locator('#id_gender1');
-    await expect(radioButton).toBeVisible();
 
-    await radioButton.check();
-    await expect(radioButton).toBeChecked();
+    // Radio buttons
+    await signUp.radioButons();
 
-    // title text
-    const titleText = page.locator('.title.text-center', { hasText: 'Enter Account Information' });
+    // Title check
+    const titleText = page.locator('.title.text-center', {
+      hasText: 'Enter Account Information',
+    });
     await expect(titleText).toBeVisible();
 
-    await page.getByLabel('password').type('Europe2025$');
+    // Password
+    await page.getByLabel('password').fill('Europe2025$');
 
     // Date of birth
-    const dateBirgt = page.locator('.form-group .row .selector #days');
-    await dateBirgt.selectOption('31');
+    await page.locator('#days').selectOption('31');
+    await page.locator('#months').selectOption('March');
+    await page.locator('#years').selectOption('1994');
 
-    // month of birth
-    const monthBIrth = page.locator('.form-group .row #months');
-    await monthBIrth.selectOption('March');
-    expect(monthBIrth).toContainText('March');
+    // Checkboxes
+    await page
+      .getByRole('checkbox', { name: 'Sign up for our newsletter!' })
+      .check();
+    await page
+      .getByRole('checkbox', { name: 'Receive special offers from our partners!' })
+      .check();
 
-    // year of birth
-    const yearOfbirth = page.locator('.form-group .row #years');
-    await yearOfbirth.selectOption('1994');
+    // Personal details
+    await signUp.inputNameSignUp();
+    await signUp.inputLastname();
+    await signUp.fillCompanyName();
+    await signUp.inpuAddress();
+    await signUp.inputAdress2();
 
-    await page.getByRole('checkbox', { name: 'Sign up for our newsletter!' }).check();
-    await page.getByRole('checkbox', { name: 'Receive special offers from our partners!' }).check();
+    // Country
+    await page.getByLabel('Country ').selectOption('United States');
 
-    // fill input field name
-     await signUp.inputNameSignUp();
+    // State
+    const stateInput = page.locator('#state');
+    await stateInput.fill('Frankivski');
+    await expect(stateInput).toHaveValue('Frankivski');
 
+    // City, Zip, Phone
+    await signUp.inputCity();
+    await signUp.zipCOde();
+    await signUp.enterPhoneNumber();
 
-    // fill last name
-    const lastNameInput = page.getByLabel('Last name ');
-    await lastNameInput.click();
-    await lastNameInput.fill('Mykhayliv');
-    expect(lastNameInput).toHaveValue('Mykhayliv');
+    // Submit form
+    const createAccountBtn = page.getByRole('button', { name: 'Create Account' });
+    await expect(createAccountBtn).toBeVisible();
+    await expect(createAccountBtn).toHaveText('Create Account');
+    await createAccountBtn.click();
 
-    // fill input field company
-    const companyIputField = page.getByLabel('Company').first();
-    await companyIputField.click();
-    await companyIputField.fill('Automation tests');
-    await expect(companyIputField).toBeVisible();
-    expect(companyIputField).toHaveValue('Automation tests');
-
-    // fill in input field address
-    const addressInputField = page.getByLabel('Address ').first();
-    await addressInputField.click();
-    expect(addressInputField).toBeVisible();
-    await addressInputField.fill('Prague');
-
-    // fill in input field address2
-    const address2InputField = await page.getByLabel('Address 2');
-    await address2InputField.click();
-    await address2InputField.fill('Lviv');
-
-    // select option
-    const countryOption = page.getByLabel('Country ');
-    await countryOption.selectOption('United States');
-
-    const stateInputFied = page.locator('#state');
-    stateInputFied.click();
-    await stateInputFied.fill('Frankivski');
-    await expect(stateInputFied).toHaveValue('Frankivski');
-
-    // input city
-    const inputCity = page.locator('#city');
-    await inputCity.click();
-    await inputCity.fill('Lviv');
-    await expect(inputCity).toHaveValue('Lviv');
-
-    // zipcode
-    const zipCode = page.locator('#zipcode');
-    await zipCode.click();
-    await zipCode.fill('79000');
-    await expect(zipCode).toHaveValue('79000');
-
-    // mobile number
-    const phoneNumber = page.locator('#mobile_number');
-    await phoneNumber.click();
-    await phoneNumber.fill('380961570878');
-    expect(phoneNumber).toHaveValue('380961570878');
-
-    // create account
-    const buttonCreaAccount = page.getByRole('button', { name: 'Create Account' });
-    await expect(buttonCreaAccount).toBeVisible();
-    await expect(buttonCreaAccount).toHaveText('Create Account');
-    await buttonCreaAccount.click();
-
+    // Account created
     const accountCreatedText = page.locator('[data-qa="account-created"]');
     await expect(accountCreatedText).toContainText('Account Created!');
 
-    // continue
-    const continueButton = page.locator('[data-qa="continue-button"]');
-    await continueButton.click();
+    // Continue
+    await page.locator('[data-qa="continue-button"]').click();
 
-    // delete account
+    //Logout
+    await signUp.logOut();
+    // Delete account (optional)
     // await signUp.deleteAccount();
   });
 });
