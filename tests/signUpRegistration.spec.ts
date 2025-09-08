@@ -1,7 +1,5 @@
 import { test, expect } from '@playwright/test';
 import { PageManager } from '../page-objects/pageManager';
-import { log } from 'console';
-import { AsyncLocalStorage } from 'async_hooks';
 
 test.describe('Accept Consent', () => {
   let pages: PageManager;
