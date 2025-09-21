@@ -14,10 +14,16 @@ export class MainNavigationBar {
    }
 
    async navButtonSignupLogin() {
-    // const navButtonSignUpLogin = this.page.getByRole('link', { name: 'Signup / Login' });
     await expect(this.navButtonSignUpLogin).toBeVisible();
     await this.navButtonSignUpLogin.click();
    }
+
+   async navButtonLogOut () {
+    const buttonLogout = this.page.locator(`a:has-text("Logout")`);
+    await expect(buttonLogout).toBeVisible();
+    await buttonLogout.click();
+   }
+
 }
 
 

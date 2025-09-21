@@ -28,5 +28,37 @@ export class AuthLoginSignup {
       const inputRegistrationPassowr = this.page.getByRole('textbox', ({name: 'password'}));
       await inputRegistrationPassowr.fill(password);
     }
+
+    async addressFillFirstLastName(name: string, lastname: string) {
+        const inputFirstname = this.page.locator('#first_name');
+        await inputFirstname.click();
+        await inputFirstname.fill(name);
+
+        const inputLastName = this.page.locator('#last_name');
+        await inputLastName.click();
+        await inputLastName.fill(lastname);
+    }
+
+    async stateCityFill(state: string, city: string) {
+        const inputState = this.page.locator('#state');
+        await inputState.click();
+        await inputState.fill(state);
+
+        const inputCity = this.page.locator('#city');
+        await inputCity.click();
+        await inputCity.fill(city);
+    }
+
+    async zipCodeMobNumberFill(zipcode: string) {
+        const zipcodeInput = this.page.locator('#zipcode');
+        await zipcodeInput.click();
+        await zipcodeInput.fill(zipcode);
+    }
+
+    async fillMobileNumber(number: string) {
+        const mobileNumberInput = this.page.locator('#mobile_number');
+        await mobileNumberInput.click();
+        await mobileNumberInput.fill(number);
+    }
 }
 
