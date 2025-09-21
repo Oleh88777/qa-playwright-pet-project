@@ -1,7 +1,7 @@
 import {test, expect} from '@playwright/test'
-import {MainNavigationBar} from '../page-objects/navigationPage';
-import { AcceptConsent } from '../page-objects/acceptConsent';
-import { AuthLoginSignup } from '../page-objects/authPage';
+import {MainNavigationBar} from '../../page-objects/navigationPage';
+import { AcceptConsent } from '../../page-objects/acceptConsent';
+import { AuthLoginSignup } from '../../page-objects/authPage';
 
 let name = 'Oleh';
 let email = 'mykhayliv8877@gmail.com';
