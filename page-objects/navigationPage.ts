@@ -3,10 +3,12 @@ import {expect, Locator, Page} from "@playwright/test";
 export class MainNavigationBar {
    readonly page: Page;
    readonly navButtonSignUpLogin: Locator;
+   readonly navbuttonDeletAccount: Locator;
     
     constructor(page: Page) {
       this.page = page
       this.navButtonSignUpLogin = this.page.getByRole('link', { name: 'Signup / Login' });
+      this.navbuttonDeletAccount = this.page.getByRole('link', ({name: 'Delete Account'}));
     }
 
     async openHomePage() {
@@ -23,6 +25,10 @@ export class MainNavigationBar {
     await expect(buttonLogout).toBeVisible();
     await buttonLogout.click();
    }
+
+    async buttonDeleteAccount () {
+      await this.navbuttonDeletAccount.click();
+    }
 
 }
 

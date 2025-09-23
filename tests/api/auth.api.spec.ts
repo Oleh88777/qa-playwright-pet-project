@@ -1,4 +1,6 @@
 import {test, expect } from "@playwright/test";
+import { faker} from "@faker-js/faker";
+import { apiUserData } from "./test.api.apiData";
 
 
 test.beforeEach(async ({page}) => {
@@ -7,17 +9,19 @@ test.beforeEach(async ({page}) => {
 
 
 test('Register user', async ({page, request}) => {
-  const response = await request.post('https://automationexercise.com/api/createAccount', {
+    
+   
+    const response = await request.post('https://automationexercise.com/api/createAccount', {
      form: {
-      name: 'Oleh',
-      email: 'mykhayliv8877@gmail.com',
-      password: 'Europe2025$',
+      name: `${apiUserData.name}`,
+      email: `${apiUserData.email}`,
+      password: `${apiUserData.password}`,
       title: 'Mr',
       birth_date: '31',
       birth_month: '03',
       birth_year: '1994',
-      firstname: 'Oleh',
-      lastname: 'Mykhayliv',
+      firstname: `${apiUserData.name}`,
+      lastname: `${apiUserData.lastname}`,
       company: 'MyCompany',
       address1: 'Street 1',
       address2: 'Office 2',
@@ -28,6 +32,9 @@ test('Register user', async ({page, request}) => {
       mobile_number: '+380501234567'
     }
   })
+
+  console.log(response);
+  console.log(JSON.stringify(apiUserData, null, 2));
 
     expect(response.status()).toBe(200);
     const responseBody = await response.json();

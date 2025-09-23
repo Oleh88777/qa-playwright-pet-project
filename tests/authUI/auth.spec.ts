@@ -2,13 +2,10 @@ import {test, expect} from '@playwright/test'
 import {MainNavigationBar} from '../../page-objects/navigationPage';
 import { AcceptConsent } from '../../page-objects/acceptConsent';
 import { AuthLoginSignup } from '../../page-objects/authPage';
+import {apiUserData} from '../api/test.api.apiData';
 
-let name = 'Oleh';
-let email = 'mykhayliv8877@gmail.com';
-let password  = 'Europe2025$';
-let lastName = 'Mykhayliv';
 
-test.describe('Auth flow cases 1-5', () => {
+test.describe.only('Auth flow cases 1-5', () => {
   let nav: MainNavigationBar
   let consent: AcceptConsent
   let loginSignUp: AuthLoginSignup;
@@ -21,17 +18,17 @@ test.describe('Auth flow cases 1-5', () => {
         await consent.acceptConsents();
 })
 
-test('Register user case:1', async ({page})=> {
+test('Register user case1', async ({page})=> {
 loginSignUp = new AuthLoginSignup(page);
 
 await expect(page).toHaveURL('https://automationexercise.com');
 await nav.navButtonSignupLogin();
-await loginSignUp.signUpInputNameEmail(name, email);
+await loginSignUp.signUpInputNameEmail(apiUserData.name, apiUserData.email);
 
 let title = page.getByRole('heading', {name: 'Enter Account Information'});
 await expect(title).toBeVisible();
 
-await loginSignUp.inputPassowrd(password);
+await loginSignUp.inputPassowrd(apiUserData.password);
 
 const selectBirthBay = page.locator('#days');
 await selectBirthBay.selectOption('31');
@@ -51,7 +48,7 @@ const chekcBoxOffers = page.locator('#optin');
 await chekcBoxOffers.check();
 await expect(chekcBoxOffers).toBeChecked();
 
-await loginSignUp.addressFillFirstLastName(name, lastName);
+await loginSignUp.addressFillFirstLastName(apiUserData.name, apiUserData.lastname);
 
 const inputCOmpany = page.getByRole('textbox', {name: 'company'}).first();
 await inputCOmpany.click();
@@ -85,11 +82,10 @@ await expect(buttonContinueRegisterdUser).toBeVisible();
 await buttonContinueRegisterdUser.click();
 
 const navButtonLoggedinasUserName = (name: string) =>
-  page.locator(`a:has-text("Logged in as ${name}")`);
-  await expect(navButtonLoggedinasUserName(name)).toBeVisible();
+  page.locator(`a:has-text("Logged in as ${apiUserData.name}")`);
+  await expect(navButtonLoggedinasUserName(apiUserData.name)).toBeVisible();
 
-  const mainNav = new MainNavigationBar(page);
-  await mainNav.navButtonLogOut();
+  await nav.buttonDeleteAccount();
 })
 
 });

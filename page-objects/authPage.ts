@@ -1,9 +1,5 @@
 import { expect, Locator, Page} from "@playwright/test";
-
-let name = 'Oleh';
-let email = 'mykhayliv8877@gmail.com';
-let passowrd = 'Europe2025$';
-
+import { apiUserData } from "../tests/api/test.api.apiData";
 
 export class AuthLoginSignup {
   readonly page: Page;
@@ -19,24 +15,24 @@ export class AuthLoginSignup {
     }
 
     async signUpInputNameEmail(name: string, email: string) {
-       await this.inputSignUpName.fill(name);
-       await this.inputSignUpEmail.fill(email);
+       await this.inputSignUpName.fill(apiUserData.name);
+       await this.inputSignUpEmail.fill(apiUserData.email);
        await this.buttonSignUp.click();
     }
 
     async inputPassowrd(password: string) {
       const inputRegistrationPassowr = this.page.getByRole('textbox', ({name: 'password'}));
-      await inputRegistrationPassowr.fill(password);
+      await inputRegistrationPassowr.fill(apiUserData.password);
     }
 
     async addressFillFirstLastName(name: string, lastname: string) {
         const inputFirstname = this.page.locator('#first_name');
         await inputFirstname.click();
-        await inputFirstname.fill(name);
+        await inputFirstname.fill(apiUserData.name);
 
         const inputLastName = this.page.locator('#last_name');
         await inputLastName.click();
-        await inputLastName.fill(lastname);
+        await inputLastName.fill(apiUserData.lastname);
     }
 
     async stateCityFill(state: string, city: string) {
@@ -60,5 +56,6 @@ export class AuthLoginSignup {
         await mobileNumberInput.click();
         await mobileNumberInput.fill(number);
     }
+
 }
 
