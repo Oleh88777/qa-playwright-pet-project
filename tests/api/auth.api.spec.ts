@@ -1,10 +1,23 @@
-import {test, expect } from "@playwright/test";
-import { faker} from "@faker-js/faker";
+import {test, expect, request} from "@playwright/test";
 import { apiUserData } from "./test.api.apiData";
 
 
-test.beforeEach(async ({page}) => {
-    await page.goto('https://automationexercise.com/');
+test.beforeEach(async ({request}) => {
+    const gotoMainpage = await request.post('https://pagead2.googlesyndication.com/pagead/ping?e=1', {
+      headers: {
+        'content-type': 'text/plain;charset=UTF-8',
+        'dnt': '1',
+        'user-agent':
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) ' +
+          'AppleWebKit/537.36 (KHTML, like Gecko) ' +
+          'Chrome/140.0.0.0 Safari/537.36',
+      },
+
+      data: ''
+    });
+
+    expect(gotoMainpage.status()).toBe(204);
+    console.log(gotoMainpage.status());
 });
 
 
@@ -33,7 +46,6 @@ test('Register user', async ({page, request}) => {
     }
   })
 
-  console.log(response);
   console.log(JSON.stringify(apiUserData, null, 2));
 
     expect(response.status()).toBe(200);

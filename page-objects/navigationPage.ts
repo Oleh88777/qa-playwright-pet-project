@@ -4,11 +4,13 @@ export class MainNavigationBar {
    readonly page: Page;
    readonly navButtonSignUpLogin: Locator;
    readonly navbuttonDeletAccount: Locator;
+   readonly buttonLogin: Locator;
     
     constructor(page: Page) {
       this.page = page
       this.navButtonSignUpLogin = this.page.getByRole('link', { name: 'Signup / Login' });
       this.navbuttonDeletAccount = this.page.getByRole('link', ({name: 'Delete Account'}));
+      this.buttonLogin = this.page.getByRole('button', {name: 'Login'});
     }
 
     async openHomePage() {
@@ -30,6 +32,10 @@ export class MainNavigationBar {
       await this.navbuttonDeletAccount.click();
     }
 
+    async buttonLoginClick() {
+        await expect(this.buttonLogin).toBeVisible();
+        await this.buttonLogin.click();
+    }
 }
 
 
