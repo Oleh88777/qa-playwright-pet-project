@@ -6,6 +6,7 @@ import {apiUserData} from '../api/test.api.apiData';
 
 
 test.describe('Auth flow cases 1-5', () => {
+
   let nav: MainNavigationBar
   let consent: AcceptConsent
   let loginSignUp: AuthLoginSignup;
@@ -19,6 +20,7 @@ test.describe('Auth flow cases 1-5', () => {
 })
 
 test('Register user case1', async ({page})=> {
+
 loginSignUp = new AuthLoginSignup(page);
 await expect(page).toHaveURL('https://automationexercise.com');
 
