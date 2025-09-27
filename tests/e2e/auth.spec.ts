@@ -22,7 +22,7 @@ test.describe('Auth flow cases 1-5', () => {
 test('Register user case1', async ({page})=> {
 
 loginSignUp = new AuthLoginSignup(page);
-await expect(page).toHaveURL('https://automationexercise.com');
+await expect(page).toHaveURL(`https://automationexercise.com/`);
 
 // login to signup
 await nav.navButtonSignupLogin();
@@ -86,7 +86,7 @@ test('login user case2', async ({page, request}) => {
   nav = new MainNavigationBar(page);
 
   await nav.navButtonSignUpLogin.click();
- 
+
   //create a user with statsic data
   const creatUserresponse = await request.post('https://automationexercise.com/api/createAccount', {
      form: {
@@ -116,7 +116,7 @@ test('login user case2', async ({page, request}) => {
    expect(responseBody.message).toBe('User created!');
    
    //fill user email and password and log in
-   await loginSignUp.loginUserEmailPassoword('mykhayliv88777@gmail.com', 'Europe2025$');
+   await loginSignUp.loginUserEmailPassoword(process.env.USER_STATIC_EMAIL!, process.env.USER_STATIC_PASSWORD!);
    await nav.buttonLoginClick(); 
 
    //delete account
@@ -124,5 +124,54 @@ test('login user case2', async ({page, request}) => {
   });
 
 
+  test('login user with inccorect email & passowrd case3', async ({page, request}) => {
+     loginSignUp = new AuthLoginSignup(page);
+     nav = new MainNavigationBar(page);
+     
+     await nav.navButtonSignUpLogin.click();
+
+  //create a user with statsic data
+  const creatUserresponse = await request.post('https://automationexercise.com/api/createAccount', {
+     form: {
+      name: `Oleh`,
+      email: `mykhayliv88777@gmail.com`,
+      password: `Europe2025$`,
+      title: 'Mr',
+      birth_date: '31',
+      birth_month: '03',
+      birth_year: '1994',
+      firstname: `Oleh`,
+      lastname: `Mykhayliv`,
+      company: 'MyCompany',
+      address1: 'Street 1',
+      address2: 'Office 2',
+      country: 'Ukraine',
+      zipcode: '01001',
+      state: 'Lviv',
+      city: 'Lviv',
+      mobile_number: '+380501234567'
+    }
+   });
+
+   expect(creatUserresponse.status()).toBe(200);
+   const responseBody = await creatUserresponse.json();
+   console.log('Response body:', responseBody);
+   expect(responseBody.message).toBe('User created!');
+
+   await loginSignUp.loginUserEmailPassoword(apiUserData.email, apiUserData.password);
+   await nav.buttonLoginClick();
+
+    // verify error 'Your email or password is incorrect!' is visible
+   const errorMessageEmailPass = page.getByText('Your email or password is incorrect!');
+   await expect(errorMessageEmailPass).toBeVisible();
+   await expect(errorMessageEmailPass).toHaveText('Your email or password is incorrect!');
+   await expect(errorMessageEmailPass).toHaveCSS('color', 'rgb(255, 0, 0)');
+
+   //delete account
+   await loginSignUp.loginUserEmailPassoword(process.env.USER_STATIC_EMAIL!, process.env.USER_STATIC_PASSWORD!);
+   await nav.buttonLoginClick();
+  })
+
+  
 });
  
