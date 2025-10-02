@@ -36,6 +36,11 @@ export class MainNavigationBar {
         await expect(this.buttonLogin).toBeVisible();
         await this.buttonLogin.click();
     }
+
+    async buttonLogOut() {
+        const buttonLogOut = this.page.getByRole('link', ({name: "Logout"}));
+        await buttonLogOut.click();
+    }
 }
 
 

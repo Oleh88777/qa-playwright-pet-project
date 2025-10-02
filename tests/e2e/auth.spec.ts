@@ -3,6 +3,7 @@ import {MainNavigationBar} from '../../page-objects/navigationPage';
 import { AcceptConsent } from '../../page-objects/acceptConsent';
 import { AuthLoginSignup } from '../../page-objects/authPage';
 import {apiUserData} from '../api/test.api.apiData';
+import { env } from 'process';
 
 
 test.describe('Auth flow cases 1-5', () => {
@@ -108,21 +109,27 @@ test('login user case2', async ({page, request}) => {
       city: 'Lviv',
       mobile_number: '+380501234567'
     }
-   });
-
-   expect(creatUserresponse.status()).toBe(200);
-   const responseBody = await creatUserresponse.json();
-   console.log('Response body:', responseBody);
-   expect(responseBody.message).toBe('User created!');
-   
-   //fill user email and password and log in
-   await loginSignUp.loginUserEmailPassoword(process.env.USER_STATIC_EMAIL!, process.env.USER_STATIC_PASSWORD!);
-   await nav.buttonLoginClick(); 
-
-   //delete account
-  await nav.buttonDeleteAccount();
   });
+   
+   const responseBody = await creatUserresponse.json();
+   expect(creatUserresponse.status()).toBe(200);
+   console.log('Response body:', responseBody);
 
+   const reponseifUserexist = responseBody.message;
+   
+   const loginDelete = async() => {
+    await loginSignUp.loginUserEmailPassoword(process.env.USER_STATIC_EMAIL!, process.env.USER_STATIC_PASSWORD!)
+    await nav.buttonLoginClick();
+    await nav.buttonDeleteAccount();
+   }
+   
+   if (reponseifUserexist === 'Email already exists!') {
+    await loginDelete();
+   } else {
+    await loginDelete();
+   }
+
+  });
 
   test('login user with inccorect email & passowrd case3', async ({page, request}) => {
      loginSignUp = new AuthLoginSignup(page);
@@ -167,11 +174,53 @@ test('login user case2', async ({page, request}) => {
    await expect(errorMessageEmailPass).toHaveText('Your email or password is incorrect!');
    await expect(errorMessageEmailPass).toHaveCSS('color', 'rgb(255, 0, 0)');
 
-   //delete account
+   //logi in
    await loginSignUp.loginUserEmailPassoword(process.env.USER_STATIC_EMAIL!, process.env.USER_STATIC_PASSWORD!);
    await nav.buttonLoginClick();
+
+   //delete account
+   await nav.buttonDeleteAccount();
+  })
+
+  test('Log out user', async({page, request}) => {
+     loginSignUp = new AuthLoginSignup(page);
+     nav = new MainNavigationBar(page);
+
+     await nav.navButtonSignUpLogin.click();
+     
+     
+     //create a user with statsic data
+     const creatUserresponse = await request.post('https://automationexercise.com/api/createAccount', {
+     form: {
+      name: `Oleh`,
+      email: `mykhayliv88777@gmail.com`,
+      password: `Europe2025$`,
+      title: 'Mr',
+      birth_date: '31',
+      birth_month: '03',
+      birth_year: '1994',
+      firstname: `Oleh`,
+      lastname: `Mykhayliv`,
+      company: 'MyCompany',
+      address1: 'Street 1',
+      address2: 'Office 2',
+      country: 'Ukraine',
+      zipcode: '01001',
+      state: 'Lviv',
+      city: 'Lviv',
+      mobile_number: '+380501234567'
+    }
+   });
+
+   expect(creatUserresponse.status()).toBe(200);
+   const responseBody = await creatUserresponse.json();
+   console.log('Response body:', responseBody);
+   expect(responseBody.message).toBe('User created!');
+
+   await loginSignUp.loginUserEmailPassoword(process.env.USER_STATIC_EMAIL!, process.env.USER_STATIC_PASSWORD!);
+   await nav.buttonLoginClick();
+   await nav.buttonLogOut();
   })
 
   
 });
- 
