@@ -15,6 +15,7 @@ export class MainNavigationBar {
 
     async openHomePage() {
      await this.page.goto('https://automationexercise.com/');
+     await expect(this.page).toHaveURL('https://automationexercise.com/');
    }
 
    async navButtonSignupLogin() {
@@ -40,6 +41,12 @@ export class MainNavigationBar {
     async buttonLogOut() {
         const buttonLogOut = this.page.getByRole('link', ({name: "Logout"}));
         await buttonLogOut.click();
+    }
+
+    async buttonProducts() {
+     const buttonProducts = this.page.locator('a', { hasText: 'Products' });
+     await expect(buttonProducts).toBeVisible(); 
+     await buttonProducts.click();
     }
 }
 

@@ -10,7 +10,12 @@ dotenv.config({ path: path.resolve(__dirname, '.env') });
 export default defineConfig({
   fullyParallel: true,
   retries: 1, 
-  reporter: 'html',
+  reporter: [
+//   ['line'],
+//   ['allure-playwright'],
+  ['html']
+],
+
   use: {
    
     trace: 'on-first-retry',
