@@ -19,9 +19,7 @@ test.describe.only('Products flow cases 8-13', () => {
 
 
 test('Varafi all products case 8', async ({page, request}) => {
-  loginSignUp = new AuthLoginSignup(page);
-  nav = new MainNavigationBar(page);
-  
+
   //verefi main page is acessible and Hi is visible
    const mainTitleText = page.getByRole('heading', { name: /Automation\s*Exercise/i })
    await expect(mainTitleText).toBeVisible();
@@ -53,13 +51,39 @@ const price = page.locator('span:has-text("Rs. 500")').first();
 await expect(price).toBeVisible();
 
 const availability = page.getByRole('paragraph');
-availability.filter({ hasText: 'Availability:'}).isVisible();
+await availability.filter({ hasText: 'Availability:'}).isVisible();
 
 const condition = page.getByRole('paragraph');
-condition.filter({hasText: 'Condition:'}).isVisible();
+await condition.filter({hasText: 'Condition:'}).isVisible();
 
 const brand = page.getByRole('paragraph');
-brand.filter({hasText: 'Brand:'}).isVisible();
+await brand.filter({hasText: 'Brand:'}).isVisible();
+})
+
+test('Verify Product quantity in Card', async ({page}) => {
+  
+  // verefi that main page is visible
+  const mainTitleText = page.getByRole('heading', { name: /Automation\s*Exercise/i })
+  await expect(mainTitleText).toBeVisible();
+
+  // clikc on the random view Product button
+  const link = page.getByRole('link', { name : 'View Product' });
+  await link.first().waitFor();
+
+  const count = await link.count();
+  const randomIndex = Math.floor(Math.random() * count);
+  await link.nth(randomIndex).click();
+
+  //Fill product quentity 4
+  await page.fill('#quantity', '4');
+
+  // add and view items in the card
+  await page.getByText('Add to cart').click();
+  await page.getByText('View Cart').click();
+  const quantityText =  (page.getByRole('button', {name: '4'}));
+  await expect(quantityText).toBeVisible();
+  
+  await page.close();
 })
 
 });
