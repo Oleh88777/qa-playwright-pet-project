@@ -3,7 +3,6 @@ import {MainNavigationBar} from '../../page-objects/navigationPage';
 import { AcceptConsent } from '../../page-objects/acceptConsent';
 import { AuthLoginSignup } from '../../page-objects/authPage';
 import {apiUserData} from '../api/test.api.apiData';
-import { env } from 'process';
 
 
 test.describe('Auth flow cases 1-5', () => {
@@ -220,7 +219,8 @@ test('login user case2', async ({page, request}) => {
    await loginSignUp.loginUserEmailPassoword(process.env.USER_STATIC_EMAIL!, process.env.USER_STATIC_PASSWORD!);
    await nav.buttonLoginClick();
    await nav.buttonLogOut();
-  })
 
+   await page.close();
+  })
   
 });
