@@ -109,11 +109,14 @@ export class AuthLoginSignup {
       await expect(inputLoginEmail).toBeVisible();
       await inputLoginEmail.click();
       await inputLoginEmail.fill(email);
+      const  buttonLogin = this.page.getByRole('button', {name: 'Login'});
+    
 
       const loginPassowrd = this.page.locator('[data-qa="login-password"]')
       await expect(loginPassowrd).toBeVisible();
       await loginPassowrd.click();
       await loginPassowrd.fill(password);
+      await buttonLogin.click();
     }
      
 
