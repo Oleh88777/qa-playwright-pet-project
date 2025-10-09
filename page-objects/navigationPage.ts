@@ -48,6 +48,11 @@ export class MainNavigationBar {
      await expect(buttonProducts).toBeVisible(); 
      await buttonProducts.click();
     }
+
+    async buttonCard () {
+      const buttonCard = this.page.getByRole('link', { name: 'Cart' })
+      await buttonCard.click();
+    }
 }
 
 

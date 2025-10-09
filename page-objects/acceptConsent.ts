@@ -14,4 +14,10 @@ export class AcceptConsent {
       await expect(this.buttonConsent).toBeVisible();
       await this.buttonConsent.click();
     }
+
+    async continueShopping () {
+        const buttonContinueShoping = this.page.getByRole('button', { name: 'Continue Shopping' })
+        await buttonContinueShoping.click();
+    }
+
 }
